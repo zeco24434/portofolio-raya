@@ -1,0 +1,130 @@
+/* ===== Tema siang (default) ===== */
+:root{
+  --bg:#f4f4f2;--surface:#ebebe8;--text:#2b2b2b;--muted:#7a7a76;--line:#d8d8d4;
+  --ball1:#dcdcd8;--ball2:#8e8e8a;--dot:90,90,86;--acc:38,140,200;--ink:28,28,28;
+  --glint:255,255,255;--glint-a:.85;
+  --f-head:"Orbitron","Rajdhani",system-ui,sans-serif;
+  --f-body:"Rajdhani",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+/* ===== Tema malam ===== */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#1f1f1e;--surface:#2a2a29;--text:#ececea;--muted:#9a9a96;--line:#3a3a38;
+  --ball1:#8a8a86;--ball2:#2e2e2c;--dot:200,200,195;--acc:127,216,255;--ink:236,236,232;
+  --glint:255,255,255;--glint-a:.32;
+}
+
+/* ===== Dasar halaman ===== */
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:19px;font-weight:500;line-height:1.6;transition:background-color .45s ease,color .45s ease}
+#bg,#api{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+#api{opacity:.9}
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px}
+
+/* ===== Menu ===== */
+nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;font:500 12px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+nav .menu{display:flex;align-items:center}
+nav a{color:inherit;text-decoration:none;margin-left:20px;transition:color .2s}
+nav a:hover{color:rgb(var(--acc))}
+
+/* ===== Tombol ganti tema ===== */
+.tema{position:relative;width:58px;height:28px;border-radius:99px;border:1px solid var(--line);background:var(--surface);cursor:pointer;margin-left:22px;padding:0;flex:none;transition:background-color .45s,border-color .45s}
+.tema:focus-visible{outline:2px solid rgb(var(--acc));outline-offset:3px}
+.tema svg{position:absolute;top:8px;width:12px;height:12px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tema .ik-s{left:8px}
+.tema .ik-m{right:8px}
+.tema .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:rgb(var(--acc));box-shadow:0 0 10px rgba(var(--acc),.55);transition:transform .4s cubic-bezier(.5,0,.2,1),background-color .45s}
+:root[data-theme="dark"] .tema .knob{transform:translateX(30px)}
+
+/* ===== Bagian utama (hero) ===== */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:24px;min-height:72vh}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.eyebrow::before{content:"> ";color:rgb(var(--acc))}
+h1{font-family:var(--f-head);font-size:clamp(26px,4.4vw,46px);font-weight:700;line-height:1.2;letter-spacing:.02em;margin:16px 0 20px}
+h1::after{content:"_";color:rgb(var(--acc));margin-left:4px;animation:kursor 1s steps(1) infinite}
+@keyframes kursor{50%{opacity:0}}
+.lead{color:var(--muted);font-size:21px;font-weight:500;max-width:30ch}
+#orb{width:100%;aspect-ratio:1;max-width:440px;justify-self:center;touch-action:none;cursor:grab}
+
+/* ===== Judul bagian, kartu, kontak, footer ===== */
+h2{font:500 12px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:70px 0 22px}
+h2::before{content:"// ";color:rgb(var(--acc))}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;transition:transform .3s,background-color .45s,border-color .45s}
+.card:hover{transform:translateY(-4px)}
+.card b{display:block;font-family:var(--f-head);font-size:17px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.card span{color:var(--muted);font-size:18px;font-weight:500}
+.num{font:500 12px var(--f-mono);color:rgb(var(--acc));letter-spacing:.15em;display:block;margin-bottom:16px}
+.num::before{content:"["}
+.num::after{content:"]"}
+.about{font-size:23px;font-weight:500;max-width:46ch}
+.kontak{font-family:var(--f-mono);font-size:15px;line-height:2.1;color:var(--muted)}
+.kontak span{color:rgb(var(--acc))}
+footer{margin-top:80px;padding:28px 0 40px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font:12px var(--f-mono);letter-spacing:.06em;color:var(--muted)}
+
+/* ===== Tampilan HP ===== */
+@media(max-width:720px){
+  .hero{grid-template-columns:1fr;text-align:center;min-height:auto}
+  .lead{margin:auto}
+  nav a{margin-left:12px}
+  .tema{margin-left:14px}
+}
+
+/* ===== LED listrik mengitari kotak keahlian ===== */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+.card{position:relative;overflow:visible}
+.card::before,
+.card::after{
+  content:"";position:absolute;inset:-1px;border-radius:18px;padding:2px;
+  background:conic-gradient(from var(--ang),
+    transparent 0 62%,
+    rgba(110,200,255,.15) 72%,
+    #7fd8ff 90%,
+    #ffffff 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  pointer-events:none;
+  animation:putar 3.6s linear infinite, kedip 2.4s ease-in-out infinite;
+}
+.card::after{padding:4px;filter:blur(5px);opacity:.75}
+.card:nth-child(2)::before,.card:nth-child(2)::after{animation-delay:-.9s,-.6s}
+.card:nth-child(3)::before,.card:nth-child(3)::after{animation-delay:-1.8s,-1.2s}
+.card:nth-child(4)::before,.card:nth-child(4)::after{animation-delay:-2.7s,-1.8s}
+@keyframes putar{to{--ang:360deg}}
+@keyframes kedip{0%,100%{opacity:1}45%{opacity:.85}50%{opacity:.55}55%{opacity:1}}
+
+/* ===== Kilatan cahaya menyapu kiri ke kanan ===== */
+.kilap{position:absolute;inset:0;border-radius:18px;overflow:hidden;pointer-events:none;z-index:2}
+.kilap::before{
+  content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:55%;
+  background:linear-gradient(90deg,transparent 0%,
+    rgba(var(--glint),calc(var(--glint-a)*.25)) 35%,
+    rgba(var(--glint),calc(var(--glint-a)*.55)) 50%,
+    rgba(var(--glint),calc(var(--glint-a)*.25)) 65%,
+    transparent 100%);
+  transform:skewX(-22deg);
+  animation:sapu 6s cubic-bezier(.45,.05,.35,1) infinite;
+  animation-delay:var(--tunda,0s);
+}
+.kilap::after{
+  content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:4%;margin-left:24%;
+  background:linear-gradient(90deg,transparent,rgba(var(--glint),var(--glint-a)),transparent);
+  transform:skewX(-22deg);filter:blur(.4px);
+  animation:sapu 6s cubic-bezier(.45,.05,.35,1) infinite;
+  animation-delay:var(--tunda,0s);
+}
+.card:nth-child(1) .kilap{--tunda:0s}
+.card:nth-child(2) .kilap{--tunda:.45s}
+.card:nth-child(3) .kilap{--tunda:.9s}
+.card:nth-child(4) .kilap{--tunda:1.35s}
+@keyframes sapu{0%{left:-70%}38%{left:130%}100%{left:130%}}
+
+/* ===== Kurangi gerakan (pengaturan aksesibilitas perangkat) ===== */
+@media (prefers-reduced-motion:reduce){
+  .kilap{display:none}
+  h1::after{animation:none}
+  body,.card,.tema,.tema .knob{transition:none}
+}
